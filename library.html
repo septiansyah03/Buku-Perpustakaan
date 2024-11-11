@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Buku | Perpustakaan Digital</title>
+    <link rel="shortcut icon" href="/css/favicon.ico" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="container library-container">
+        <h2 class="text-center mt-5">Kelola Buku Perpustakaan</h2>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookModal">
+        <i class="fa fa-plus" aria-hidden="true"></i> Input Buku
+        </button>
+        
+
+    <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">       
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="bookModalLabel">
+    <i class="fa fa-book" aria-hidden="true"></i> Tambah Buku Baru
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        
+          <div class="modal-body">
+              <form id="bookForm" method="POST">                   <div class="mb-3">
+                      <label for="title" class="form-label">Judul Buku</label>
+                      <input type="text" class="form-control" id="title" placeholder="Masukkan Judul Buku" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="author" class="form-label">Pengarang</label>
+                      <input type="text" class="form-control" id="author" placeholder="Masukkan Pengarang" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="category" class="form-label">Kategori</label>
+                      <select class="form-select" id="category" required>
+                          <option value="">--Pilih Kategori--</option>
+                          <option value="Dongeng">Dongeng</option>
+                          <option value="Novel">Novel</option>
+                          <option value="Sejarah">Sejarah</option>
+                          <option value="Teknologi">Teknologi</option>
+                          <option value="Pendidikan">Pendidikan</option>
+                          <option value="Komik">Komik</option>
+                          <option value="Sains">Sains</option>
+                          <option value="Matematika">Matematika</option>
+                          <option value="Majalah">Majalah</option>
+                          <option value="Atlas">Atlas</option>
+
+                      </select>
+                  </div>
+                  <div class="mb-3">
+                      <label for="status" class="form-label">Status</label>
+                      <select class="form-select" id="status" required>
+                          <option value="Tersedia">Tersedia</option>
+                          <option value="Dipinjam">Dipinjam</option>
+                      </select>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Tambah Buku</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+                <h2 class="mt-4">Daftar Buku</h2>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Judul Buku</th>
+                    <th>Pengarang</th>
+                    <th>Kategori</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="bookList">
+                            </tbody>
+        </table>
+        <div id="pagination" class="mt-3"></div>
+
+    </div>
+
+        <div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="editBookModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="editBookModalLabel"><i class="fa fa-book" aria-hidden="true"></i> Ubah Status Buku</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>                
+                <div class="modal-body">
+                    <form id="editBookForm">
+                        <div class="mb-3">
+                            <label for="editTitle" class="form-label">Judul</label>
+                            <input type="text" class="form-control" id="editTitle" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAuthor" class="form-label">Penulis</label>
+                            <input type="text" class="form-control" id="editAuthor" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCategory" class="form-label">Kategori</label>
+                            <input type="text" class="form-control" id="editCategory" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editStatus" class="form-label">Status</label>
+                            <select class="form-select" id="editStatus" required>
+                            <option value="Tersedia">Tersedia</option>
+                            <option value="Dipinjam">Dipinjam</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button id="editBookButton" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="assets/script.js"></script>
+</body>
+</html>
